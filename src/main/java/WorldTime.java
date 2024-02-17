@@ -7,6 +7,7 @@ public class WorldTime {
        DateTimeZone timeZone = DateTimeZone.forID(country);
        DateTime time = new DateTime(timeZone);
        String formattedTime = time.toString("HH:mm");
+       System.out.println("Teste");
        return formattedTime;
 
     }
