@@ -1,0 +1,44 @@
+
+
+plugins{
+    id 'java'
+    id 'application'
+}
+
+group 'com.example'
+version '1.0-SNAPSHOT'
+application {
+    mainClassName = 'Main'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies{
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+    implementation 'joda-time:joda-time:2.12.7'
+}
+
+jar{
+    manifest{
+        attributes('Main-Class': 'Main')
+        attributes('Class-Path': configurations.compileClasspath.collect { it.getName() }.join(' '))
+        attributes('Manifest-Version': '1.0')
+}
+}
+
+task zip(type:Zip, group:"Archive",description:"Archives the project files"){
+    destinationDirectory = file(".")
+    archiveFileName = "project.zip"
+    from "src"
+}
+
+test{
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed", "standardOut", "standardError"
+    }
+}
+
+build.finalizedBy zip,javadoc
